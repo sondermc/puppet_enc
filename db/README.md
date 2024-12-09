@@ -10,20 +10,20 @@
 # CREATE DB
 sqlite3: 
 ```bash
-DB=db/puppet_enc.sqlite
-rm -f ${DB}
-sqlite3 ${DB} < db/schema.sql
-sqlite3 ${DB} < db/data.sql
+DATABASE_URL=db/puppet_enc.sqlite
+rm -f ${DATABASE_URL}
+sqlite3 ${DATABASE_URL} < db/schema.sql
+sqlite3 ${DATABASE_URL} < db/data.sql
 ```
 
 # Query DB
 ```bash
-DB=db/puppet_enc.sqlite
-sqlite3 ${DB} 'SELECT * from node';
-sqlite3 ${DB} 'SELECT * from environment';
-sqlite3 ${DB} 'SELECT * from role';
+DATABASE_URL=db/puppet_enc.sqlite
+sqlite3 ${DATABASE_URL} 'SELECT * from node';
+sqlite3 ${DATABASE_URL} 'SELECT * from environment';
+sqlite3 ${DATABASE_URL} 'SELECT * from role';
 
-sqlite3 ${DB} '
+sqlite3 ${DATABASE_URL} '
 SELECT node.id, node.certname, environment.name, role.name, node.created_on, node.updated_on 
   FROM node
   INNER JOIN environment ON node.environment_id = environment.id
