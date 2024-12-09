@@ -1,0 +1,15 @@
+[package]
+name = "puppet_enc"
+authors = ["Chris Sondermeijer <chris.sondermeijer@gmail.com>"]
+version = "0.0.1"
+edition = "2021"
+description = "Puppet External Node Classifier (ENC)"
+readme = "README.md"
+repository = "https://github.com/sondermc/puppet_enc.git"
+homepage = "https://github.com/sondermc/puppet_enc/wiki"
+license     = "apache-2.0"
+
+[dependencies]
+sqlx = { version = "0.8.2", features = [ "runtime-async-std-native-tls", "sqlite" ] }
+async-std = { version = "1.6", features = [ "attributes" ] }
+futures = "0.3.18"
