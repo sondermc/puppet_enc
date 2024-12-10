@@ -22,6 +22,6 @@ CREATE TABLE IF NOT EXISTS node (
     role_id INTEGER,
     created_on DATETIME DEFAULT (datetime('now', 'utc')),
     updated_on DATETIME DEFAULT (datetime('now', 'utc')),
-    FOREIGN KEY (environment_id) REFERENCES node (environment_id),
-    FOREIGN KEY (role_id) REFERENCES node (role_id)
+    FOREIGN KEY (environment_id) REFERENCES environment (id),
+    FOREIGN KEY (role_id) REFERENCES role (id)
 );
