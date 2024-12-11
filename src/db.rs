@@ -22,6 +22,6 @@ pub async fn insert_data(db_url:&str) -> Result<SqliteQueryResult, Error>{
   let insert_query = sqlx::query(&qry).bind("test").bind("The example.com Testing Environment").execute(&instances).await;
   
   instances.close().await;
-  println!("{:?}", insert_query);
+  info!("{:?}", insert_query);
 
   */

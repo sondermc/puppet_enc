@@ -11,7 +11,7 @@ async fn main(){
 
   let args: Vec<String> = env::args().collect();
   let nodename: String = set_nodename(args);
-  println!("final nodename: {}", nodename);
+  debug!("final nodename: {}", nodename);
   
   let db_url = String::from("sqlite://db/puppet_enc.sqlite"); 
   
