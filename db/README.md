@@ -8,7 +8,7 @@
 * Where to safely store the database credentials when using puppetdb? 
 
 # CREATE DB
-sqlite3: 
+sqlite3: in bash
 ```bash
 DATABASE_URL=db/puppet_enc.sqlite
 rm -f ${DATABASE_URL}
@@ -30,3 +30,13 @@ SELECT node.id, node.certname, environment.name, role.name, node.created_on, nod
   INNER JOIN role ON node.role_id = role.id
 '
 ```
+
+# Issues
+Need to solve this: on buldtime the rustcompiler checks if the database sql commands do have a valid syntax. So at this point it seems to need access to the database. To avoid this buildtime error:
+```bash
+DATABASE_URL=db/puppet_enc.sqlite
+rm -f ${DATABASE_URL}
+sqlite3 ${DATABASE_URL} < db/schema.sql
+sqlite3 ${DATABASE_URL} < db/data.sql
+```
+After building, this file can be safely removed.

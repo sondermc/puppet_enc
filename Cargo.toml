@@ -10,6 +10,8 @@ homepage = "https://github.com/sondermc/puppet_enc/wiki"
 license     = "apache-2.0"
 
 [dependencies]
+log = "0.4.22"
+env_logger = "0.9.0"
 sqlx = { version = "0.8.2", features = [ "runtime-async-std-native-tls", "sqlite" ] }
 async-std = { version = "1.6", features = [ "attributes" ] }
 futures = "0.3.18"
