@@ -2,8 +2,12 @@ mod db;
 use puppet_enc::set_nodename;
 
 use std::env;
-use sqlx::migrate::MigrateDatabase;
+
+use sqlx::{migrate::MigrateDatabase, Sqlite};
+
 use log::debug;
+
+const DB_URL: &str = "sqlite://db/puppet_enc.sqlite?mode=rwc";
 
 #[async_std::main]
 async fn main(){
@@ -13,15 +17,13 @@ async fn main(){
   let nodename: String = set_nodename(args);
   debug!("final nodename: {}", nodename);
   
-  let db_url = String::from("sqlite://db/puppet_enc.sqlite"); 
-  
-  if !sqlx::Sqlite::database_exists(&db_url).await.unwrap_or(false) {
-    sqlx::Sqlite::create_database(&db_url).await.unwrap();
-    match db::create_schema(&db_url).await{
+  if !Sqlite::database_exists(DB_URL).await.unwrap_or(false) {
+    Sqlite::create_database(DB_URL).await.unwrap();
+    match db::create_schema(DB_URL).await{
       Ok(_) => debug!("Database created succesfully"),
       Err(e) => panic!("{}", e)
     }
-    match db::insert_data(&db_url).await{
+    match db::insert_data(DB_URL).await{
       Ok(_) => debug!("Data added to database succesfully"),
       Err(e) => panic!("{}", e)
     }

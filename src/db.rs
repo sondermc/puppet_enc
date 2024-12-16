@@ -17,7 +17,7 @@ pub async fn insert_data(db_url:&str) -> Result<SqliteQueryResult, Error>{
 
 
 /*
-  let instances = SqlitePool::connect(&db_url).await.unwrap();
+  let instances = SqlitePool::connect(&DB_URL).await.unwrap();
   let qry = "INSERT INTO environment (name, description) VALUES($1, $2)";
   let insert_query = sqlx::query(&qry).bind("test").bind("The example.com Testing Environment").execute(&instances).await;
   
