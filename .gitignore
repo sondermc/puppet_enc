@@ -1,3 +1,4 @@
 /target
 Cargo.lock
 db/puppet_enc.sqlite
+db/puppet_enc.sqlite*
