@@ -1,7 +1,7 @@
 mod db;
 use puppet_enc::set_nodename;
 use std::env;
-use sqlx::{migrate::MigrateDatabase, Sqlite};
+use sqlx::{migrate::MigrateDatabase, Sqlite, Row, SqlitePool};
 use log::debug;
 use dotenv::dotenv;
 
@@ -15,7 +15,7 @@ async fn main(){
 
   dotenv().ok();
   let database_url: String = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set.");
-  let db_url = database_url.as_str();
+  let db_url: &str = database_url.as_str();
 
   if !Sqlite::database_exists(db_url).await.unwrap_or(false) {
     Sqlite::create_database(db_url).await.unwrap();
@@ -28,4 +28,25 @@ async fn main(){
       Err(e) => panic!("{}", e)
     }
   }
+  let pool: sqlx::Pool<sqlx::Sqlite> = SqlitePool::connect(&db_url).await.unwrap();
+
+  let node_info = sqlx::query("SELECT environment.name AS environment, role.name AS role
+  FROM node
+  INNER JOIN environment ON node.environment_id = environment.id
+  INNER JOIN role ON node.role_id = role.id
+  WHERE node.certname = $1
+  ")
+  .bind(nodename)
+  .fetch_all(&pool)
+  .await
+  .unwrap();
+
+  for row in node_info {
+    let environment: String = row.get("environment");
+    let role: String = row.get("role");
+    println!("environment: {}, role: {}", environment, role);
+  }
+
+  pool.close().await;
+  
 }
