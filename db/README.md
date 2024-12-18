@@ -29,6 +29,19 @@ SELECT node.id, node.certname, environment.name, role.name, node.created_on, nod
   INNER JOIN environment ON node.environment_id = environment.id
   INNER JOIN role ON node.role_id = role.id
 '
+
+sqlite3 ${DATABASE_URL} "
+SELECT environment.name AS environment, role.name AS role
+  FROM node
+  INNER JOIN environment ON node.environment_id = environment.id
+  INNER JOIN role ON node.role_id = role.id
+  WHERE node.certname = 'puppetserver.example.com';
+SELECT environment.name AS environment, role.name AS role
+  FROM node
+  INNER JOIN environment ON node.environment_id = environment.id
+  INNER JOIN role ON node.role_id = role.id
+  WHERE node.certname = 'default';
+"
 ```
 
 # Issues
