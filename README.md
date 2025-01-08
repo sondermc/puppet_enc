@@ -28,11 +28,13 @@ see: [README.md](db/README.md)
 cargo test
 cargo build
 cargo run
-cargo release version patch --execute --no-confirm
-cargo release commit --execute --no-confirm
-cargo release tag --execute --no-confirm
-cargo release push --execute --no-confirm
-cargo rpm build -v
+cargo run -- puppetserver.example.com
+RUST_LOG=debug ./target/debug/puppet_enc puppetserver.example.com
+#cargo release version patch --execute --no-confirm
+#cargo release commit --execute --no-confirm
+#cargo release tag --execute --no-confirm
+#cargo release push --execute --no-confirm
+#cargo rpm build -v
 find target/release/rpmbuild/RPMS/ -type f -name *.rpm
 ```
 
