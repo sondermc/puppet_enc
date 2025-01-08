@@ -16,6 +16,11 @@ sqlite3 ${DATABASE_URL} < db/schema.sql
 sqlite3 ${DATABASE_URL} < db/data.sql
 ```
 
+# Add extra nodes to database (mimic production)
+```bash
+sqlite3 ${DATABASE_URL} < db/data_extra.sql
+```
+
 # Query DB
 ```bash
 DATABASE_URL=db/puppet_enc.sqlite
