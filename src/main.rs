@@ -1,9 +1,8 @@
 mod db;
-use puppet_enc::set_nodename;
+use puppet_enc::{get_dburl, set_nodename};
 use std::env;
 use sqlx::{migrate::MigrateDatabase, Sqlite, Row, SqlitePool};
 use log::debug;
-use dotenv::dotenv;
 use serde::{Serialize, Deserialize};
 use serde_yml;
 
@@ -32,9 +31,8 @@ async fn main() {
     std::process::exit(returncode);
   }
 
-  dotenv().ok();
-  let database_url: String = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set.");
-  let db_url: &str = database_url.as_str();
+  let database_url: String = get_dburl();
+  let db_url = &database_url.as_str();
   
   if !Sqlite::database_exists(db_url).await.unwrap_or(false) {
     Sqlite::create_database(db_url).await.unwrap();

@@ -1,4 +1,5 @@
 use log::{debug, error};
+use dotenv::dotenv;
 
 pub fn set_nodename(args: Vec<String>) -> (String, i32) {
   let mut nodename: String = "default".to_string();
@@ -25,6 +26,13 @@ pub fn set_nodename(args: Vec<String>) -> (String, i32) {
 
   return node_tuple;
 }
+
+pub fn get_dburl() -> String {
+  dotenv().ok();
+  let database_url: String = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set.");
+  return database_url;
+}
+
 #[cfg(test)]
 mod tests {
   use super::*;
