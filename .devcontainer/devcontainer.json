@@ -1,0 +1,20 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/debian
+{
+  "name": "tool-rustlang",
+  "image": "repo.core.geensnip:5000/tool-rustlang",
+  "runArgs": [
+    "--userns=keep-id"
+  ],
+  "workspaceMount": "source=${localWorkspaceFolder},target=/home/rustlang/rust-sources,type=bind,relabel=shared",
+  "workspaceFolder": "/home/rustlang/rust-sources",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "vadimcn.vscode-lldb",
+        "GitHub.copilot"
+      ]
+    }
+  }
+}
