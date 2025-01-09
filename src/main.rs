@@ -18,9 +18,20 @@ async fn main() {
   env_logger::init();
   
   let args: Vec<String> = env::args().collect();
-  let nodename: String = set_nodename(args);
+  let _returncode: i32 = 0;
+  let node_tuple: (String, i32) = set_nodename(args);
+
+  let nodename: &str = &node_tuple.0;
+  let returncode: i32 = node_tuple.1;
+
+  debug!("final node_tuple: {:#?}", node_tuple);
   debug!("final nodename: {}", nodename);
+  debug!("final returncode: {}", returncode);
   
+  if returncode != 0 {
+    std::process::exit(returncode);
+  }
+
   dotenv().ok();
   let database_url: String = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set.");
   let db_url: &str = database_url.as_str();
