@@ -30,7 +30,9 @@ cargo build
 cargo run
 cargo run -- puppetserver.example.com
 RUST_LOG=debug ./target/debug/puppet_enc puppetserver.example.com
-#cargo release version patch --execute --no-confirm
+cargo build --release
+RUST_LOG=debug ./target/release/puppet_enc puppetserver.example.com
+
 #cargo release commit --execute --no-confirm
 #cargo release tag --execute --no-confirm
 #cargo release push --execute --no-confirm
